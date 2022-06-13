@@ -36,7 +36,7 @@ app.post('/simpleform',
     res.locals.username = username;
     res.locals.age = age;
     res.locals.ageInDays = age*365;
-    res.locals.version='1.0.0';
+    res.locals.version='1.0.1';
     res.render('simpleformresult');
   }
 )
