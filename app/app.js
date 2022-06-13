@@ -23,6 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.get('/simpleform',
+  (req,res,next) => {
+    res.render('simpleform')
+  })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
