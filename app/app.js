@@ -31,7 +31,13 @@ app.get('/simpleform',
 
 app.post('/simpleform',
   (req,res,next) => {
-    res.json(req.body);
+    //res.json(req.body);
+    const {username,age} = req.body;
+    res.locals.username = username;
+    res.locals.age = age;
+    res.locals.ageInDays = age*365;
+    res.locals.version='1.0.0';
+    res.render('simpleformresult');
   }
 )
 
