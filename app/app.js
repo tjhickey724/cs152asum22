@@ -29,17 +29,17 @@ app.get('/simpleform',
     res.render('simpleform')
   })
 
-app.post('/simpleform',
-  (req,res,next) => {
-    //res.json(req.body);
-    const {username,age} = req.body;
+  app.post("/simpleform", (req, res, next) => {
+    // res.json(req.body);
+    const { username, age, height } = req.body;
     res.locals.username = username;
     res.locals.age = age;
-    res.locals.ageInDays = age*365;
-    res.locals.version='1.0.1';
-    res.render('simpleformresult');
-  }
-)
+    res.locals.ageInDays = age * 365;
+    res.locals.height = height;
+    res.locals.heightCm = height * 2.54;
+    res.locals.version = "1.0.0";
+    res.render("simpleformresult");
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
