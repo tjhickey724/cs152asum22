@@ -72,11 +72,14 @@ app.get('/showFamily',
     res.render('showFamily');
   })
 
-app.get('/apidemo',
+app.get('/apidemo/:email',
   async (req,res,next) => {
+    const email = req.params.email;
     const response = await axios.get('https://www.cs.brandeis.edu/~tim/cs103aSpr22/courses20-21.json')
     console.dir(response.data.length)
-    res.json(response.data[1000]);
+    res.locals.courses = response.data.filter((c) => c.instructor[2]==email+"@brandeis.edu")
+    res.render('showCourses')
+    //res.json(response.data.slice(100,105));
   })
 
 // catch 404 and forward to error handler
