@@ -41,6 +41,24 @@ app.get('/simpleform',
     res.render("simpleformresult");
   });
 
+  app.get('/bmi',
+    (req, res, next) => {
+      res.render('bmi')
+    }
+  )
+
+app.post('/bmi',
+  (req,res,next) => {
+    const {username, weight, height} = req.body;
+    res.locals.username = username;
+    res.locals.height = height;
+    res.locals.weight = weight;
+    res.locals.BMI = weight/(height*height)*703;
+    res.locals.version = '1.0.0';
+    res.render('bmiresults');
+  }
+)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
