@@ -1,4 +1,12 @@
 <h1>My Family</h1>
+<ul>
+    <% for(person of family){%> 
+        <li> 
+            <%= person.name %> is <%= person.age %> years old
+        </li>
+    <% } %>
+</ul>
+
 <pre>
 <%= JSON.stringify(family,null,5) %>
 </pre>
