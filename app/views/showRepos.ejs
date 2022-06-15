@@ -3,15 +3,20 @@
 <table class="table table-bordered table-striped">
     <thead>
         <th>name</th>
-        <th>link</th>
     </thead>
     <tbody>
-        <% for(repo of repos){%> 
-        <tr> 
-            <td><%= repo.name %> </td> 
-            <td> <a href="<%=repo.html_url%>" > <%=repo.full_name%></a> </td> 
-        </tr>
-        <% } %>
+        <% for(repo of repos){%>
+            <tr>
+                <td>
+                    <%= repo.name %>
+                </td>
+                <td>
+                    <a class="link-primary text-decoration-none" href="<%= repo.html_url %>">
+                        <%= repo.html_url %>
+                    </a>
+                </td>
+            </tr>
+            <% } %>
     </tbody>
 </table>
 
