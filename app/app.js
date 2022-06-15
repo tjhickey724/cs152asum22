@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const layouts = require("express-ejs-layouts");
+const axios = require('axios')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -75,6 +76,27 @@ app.post('/dist',
     res.render('distResult');
   }
 )
+const family = [
+  {name:'Tim',age:66,},
+  {name:'Caitlin',age:27,},
+  {name:'Ryan',age:23,},
+];
+
+app.get('/showFamily',
+  (req,res,next) => {
+    res.locals.family = family;
+    res.render('showFamily');
+  })
+
+app.get('/apidemo/:email',
+  async (req,res,next) => {
+    const email = req.params.email;
+    const response = await axios.get('https://www.cs.brandeis.edu/~tim/cs103aSpr22/courses20-21.json')
+    console.dir(response.data.length)
+    res.locals.courses = response.data.filter((c) => c.instructor[2]==email+"@brandeis.edu")
+    res.render('showCourses')
+    //res.json(response.data.slice(100,105));
+  })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

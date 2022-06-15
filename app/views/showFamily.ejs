@@ -1,0 +1,15 @@
+<h1>My Family</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <th>name</th>
+        <th>age</th>
+    </thead>
+    <tbody>
+        <% for(person of family){%> 
+        <tr> 
+            <td><%= person.name %></td> <td><%= person.age %> </td> 
+        </tr>
+        <% } %>
+    </tbody>
+</table>
