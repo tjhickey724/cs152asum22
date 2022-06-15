@@ -7,6 +7,17 @@ const layouts = require("express-ejs-layouts");
 const axios = require('axios')
 
 // *********************************************************** //
+//  Loading JSON datasets
+// *********************************************************** //
+const courses = require('./public/data/courses20-21.json')
+
+// *********************************************************** //
+//  Loading models
+// *********************************************************** //
+
+const Course = require('./models/Course')
+
+// *********************************************************** //
 //  Connecting to the database
 // *********************************************************** //
 
@@ -129,12 +140,9 @@ app.get('/githubInfo/:githubId',
 
 app.get('/uploadDB',
   async (req,res,next) => {
-    //await Course.deleteMany({})
-    for (course of courses){
-      const {coursenum,section,term}=course;
-      await Course.deleteMany({});
-      await Course.insertMany(courses);
-    }
+    await Course.deleteMany({});
+    await Course.insertMany(courses);
+
     const num = await Course.find({}).count();
     res.send("data uploaded: "+num)
   }
