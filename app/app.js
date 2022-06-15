@@ -98,6 +98,15 @@ app.get('/apidemo/:email',
     //res.json(response.data.slice(100,105));
   })
 
+app.get('/githubInfo',
+  async (req,res,next) => {
+    const response = await axios.get('https://api.github.com/users/tjhickey724/repos')
+    console.dir(response.data.length)
+    res.locals.repos = response.data
+    res.render('showRepos')
+    //res.json(response.data.slice(100,105));
+  })
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
