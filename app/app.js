@@ -98,6 +98,31 @@ app.get('/apidemo/:email',
     //res.json(response.data.slice(100,105));
   })
 
+app.get('/exam3b',(req,res,next) => {
+  res.render('exam3b')
+})
+
+app.post('/exam3b',
+  async (req,res,next) => {
+    res.locals.url = req.body.url;
+    res.render('exam3bShowImage')
+  });
+
+app.get('/meals',(req,res,next) => {
+  res.render('meals')
+})
+
+app.post('/meals',
+  async (req,res,next) => {
+    const ingredient = req.body.ingredient;
+    const url="https://www.themealdb.com/api/json/v1/1/filter.php?i="+ingredient
+    const response = await axios.get(url)
+    console.dir(response.data.length)
+    res.locals.ingredient = ingredient
+    res.locals.meals = response.data.meals
+    res.render('showMeals')
+  })
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
