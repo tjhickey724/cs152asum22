@@ -117,9 +117,9 @@ app.post('/meals',
     const ingredient = req.body.ingredient;
     const url="https://www.themealdb.com/api/json/v1/1/filter.php?i="+ingredient
     const response = await axios.get(url)
-    console.dir(response.data.length)
+    console.dir(response.data)
     res.locals.ingredient = ingredient
-    res.locals.meals = response.data.meals
+    res.locals.meals = response.data.meals || []
     res.render('showMeals')
   })
 
