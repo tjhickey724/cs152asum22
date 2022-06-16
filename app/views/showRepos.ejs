@@ -1,0 +1,19 @@
+<h1>Show Repos</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <th>name</th>
+        <th>link</th>
+    </thead>
+    <tbody>
+        <% for(repo of repos){%> 
+        <tr> 
+            <td><%= repo.name %> </td> 
+            <td> <a href="<%=repo.html_url%>" > <%=repo.full_name%></a> </td> 
+        </tr>
+        <% } %>
+    </tbody>
+</table>
+
+
+<pre><%= JSON.stringify(repos[0],null,5) %> </pre>

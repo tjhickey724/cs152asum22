@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Exam2a</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+  </head>
+  <body class="container m-2">
+    <h1 class="bg-danger p-3">Exam 2a</h1>
+    <p>Write the HTML and Bootstrap for this page. Do not use the style attribute, only use the class attribute. Write all of the code, even for these words!</p>
+    <table class="table table-bordered table-striped bg-info">
+      <thead>
+        <tr>
+          <th>name</th><th>age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tim</td><td>66</td>
+        </tr>
+        <tr>
+          <td>Caitlin</td><td>27</td>
+        </tr>
+        <tr>
+          <td>Ryan</td><td>23</td>
+        </tr>
+      </tbody>
+    </table>
+    <form method="post" action="/">
+      First name: <input type="text" name="first"><br>
+      Age: <input type="number" steps="any" name="age"><br>
+      Birthdate <input type="date" name="birthdate"><br>
+      Gender: 
+      <select name="gender">
+        <option>male</option>
+        <option>female</option>
+        <option>other</option>
+        <option>prefer not to say</option>
+      </select>
+      <hr>
+      Briefly describe your summer plans:<br>
+      <textarea name="plans"></textarea>
+      <hr>
+      <input type="submit">
+    </form>
+   
+  </body>
+</html>	
