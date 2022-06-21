@@ -1,0 +1,15 @@
+<h1>Todo items</h1>
+<ul>
+    <% for (item of todoitems){%>
+        <li><%= item.descr %>  <%= item.completed %> <br> 
+            <%= item.createdAt %></li>
+    <% } %>
+</ul>
+
+<h1>Add a todo</h1>
+<form method="post" action="/todo">
+    description:<input type="text" name="desc"><br>
+    <input type="submit">
+</form>
+<hr> 
+<pre><%= JSON.stringify(todoitems,null,5) %></pre>

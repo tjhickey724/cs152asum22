@@ -226,7 +226,7 @@ app.post('/todo',
       }
       const todoItem = new ToDoItem(todoObj); // create ORM object for item
       await todoItem.save();  // stores it in the database
-      res.redirect('/');
+      res.redirect('/showTodoList');
 
 
     }catch(err){
@@ -240,8 +240,9 @@ app.get('/showTodoList',
   async (req,res,next) => {
    try {
     const todoitems = await ToDoItem.find({userId:res.locals.user._id});
+
     res.locals.todoitems = todoitems
-    res.render('showtodoitems')
+    res.render('showTodoList')
     //res.json(todoitems);
    }catch(e){
     next(e);
