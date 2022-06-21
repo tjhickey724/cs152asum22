@@ -250,6 +250,34 @@ app.get('/showTodoList',
   }
 )
 
+app.get('/deleteToDoItem/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        await ToDoItem.deleteOne({_id:itemId});
+        res.redirect('/showTodoList');
+      } catch(e){
+        next(e);
+      }
+    }
+)
+
+app.get('/toggleToDoItem/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        const item = await ToDoItem.findOne({_id:itemId});
+        item.completed = ! item.completed;
+        await item.save();
+        res.redirect('/showTodoList');
+      } catch(e){
+        next(e);
+      }
+    }
+)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
