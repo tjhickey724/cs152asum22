@@ -210,6 +210,9 @@ app.get('/uploadDB',
   }
 )
 
+app.get('/todo', (req,res,next) => res.render('todo'))
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

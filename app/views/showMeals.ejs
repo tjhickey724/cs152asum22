@@ -1,10 +1,12 @@
 <h1>Show Meals containing <%= ingredient %></h1>
 
-
+<pre>
+    <%= JSON.stringify(meals,null,5) %>
+</pre>
 <% for(meal of meals){%> 
     <h2><%= meal.strMeal %></h2>
     <br>
-    <img width="100" src="<%= meal.strMealThumb %>" alt="meal photo" >
+    <img width="100" src="<%= meal.strMealThumb  %>" alt="meal photo" >
     <hr>
 <% } %>
 
