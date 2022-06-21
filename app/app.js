@@ -209,9 +209,45 @@ app.get('/uploadDB',
     res.send("data uploaded: "+num)
   }
 )
+const ToDoItem = require('./models/ToDoItem');
 
 app.get('/todo', (req,res,next) => res.render('todo'))
 
+app.post('/todo',
+  isLoggedIn,
+  async (req,res,next) => {
+    try {
+      const desc = req.body.desc;
+      const todoObj = {
+        userId:res.locals.user._id,
+        descr:desc,
+        completed:false,
+        createdAt: new Date(),
+      }
+      const todoItem = new ToDoItem(todoObj); // create ORM object for item
+      await todoItem.save();  // stores it in the database
+      res.redirect('/');
+
+
+    }catch(err){
+      next(err);
+    }
+  }
+)
+
+app.get('/showTodoList',
+        isLoggedIn,
+  async (req,res,next) => {
+   try {
+    const todoitems = await ToDoItem.find({userId:res.locals.user._id});
+    res.locals.todoitems = todoitems
+    //res.render('showtodoitems')
+    res.json(todoitems);
+   }catch(e){
+    next(e);
+   }
+  }
+)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
