@@ -225,7 +225,10 @@ app.get('/bigCourses',
   })
 
 app.get('/coursesBySubject',
-  res.render('coursesBySubject'))
+  (req,res,next) => {
+    res.render('coursesBySubject')
+})
+  
 
 
 app.post('/coursesBySubject',
@@ -240,7 +243,9 @@ app.post('/coursesBySubject',
       })
                .select("subject coursenum name enrolled term")
                .sort({enrolled:-1})
-      res.json(data);       
+      //res.json(data); 
+      res.locals.courses = data;
+      res.render('showCoursesBySubject');
 
     }catch(e){
       next(e)
