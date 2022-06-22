@@ -209,6 +209,21 @@ app.get('/uploadDB',
     res.send("data uploaded: "+num)
   }
 )
+
+app.get('/bigCourses',
+  async (req,res,next) => {
+    try{
+      const bigCourses =  await Course.find({enrolled:{$gt:150}})
+                          .select("subject coursenum name enrolled term")
+                          .sort({term:1,enrolled:-1})
+                          .limit(3)
+                          ;
+      res.json(bigCourses);
+    }catch(e){
+      next(e)
+    }
+  })
+
 const ToDoItem = require('./models/ToDoItem');
 
 app.get('/todo', (req,res,next) => res.render('todo'))
@@ -274,7 +289,7 @@ app.get('/toggleToDoItem/:itemId',
         res.redirect('/showTodoList');
       } catch(e){
         next(e);
-      }
+      } 
     }
 )
 
