@@ -18,7 +18,7 @@ const courses = require('./public/data/courses20-21.json')
 //  Loading models
 // *********************************************************** //
 
-const Course = require('./models/Course')
+
 
 // *********************************************************** //
 //  Connecting to the database
@@ -44,6 +44,14 @@ const isLoggedIn = (req,res,next) => {
   }
   else res.redirect('/login')
 }
+/*
+  Load MongoDB models 
+*/
+const ToDoItem = require('./models/ToDoItem');
+const Schedule = require('./models/Schedule');
+const Course = require('./models/Course')
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -224,6 +232,27 @@ app.get('/bigCourses',
     }
   })
 
+
+
+app.get('/addCourse/:courseId',
+   isLoggedIn,
+   async (req,res,next) => {
+    try {
+      const schedItem = 
+         new Schedule(
+          {
+            userid:res.locals.user._id,
+            courseId:req.params.courseId}
+          )
+      await schedItem.save();
+      res.redirect('/coursesBySubject')
+    }catch(e) {
+      next(e)
+    }
+   }
+
+)
+
 app.get('/coursesBySubject',
   (req,res,next) => {
     res.locals.courses =[]
@@ -254,7 +283,7 @@ app.post('/coursesBySubject',
   }
 )
 
-const ToDoItem = require('./models/ToDoItem');
+
 
 app.get('/todo', (req,res,next) => res.render('todo'))
 
