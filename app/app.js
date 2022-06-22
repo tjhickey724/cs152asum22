@@ -224,13 +224,22 @@ app.get('/bigCourses',
     }
   })
 
-app.get('/courses/:subject/:term',
+app.get('/coursesBySubject',
+  res.render('coursesBySubject'))
+
+
+app.post('/coursesBySubject',
   async (req,res,next) => {
     try{
-      const subject = req.params.subject;
-      const term = req.params.term;
-      const data = await Course.find({subject,term})
-               .select("subject coursenum name enrolled term");
+      const subject = req.body.subject;
+      const term = req.body.term;
+      const data = await Course.find({
+        subject:subject,
+        term:term, 
+        enrolled:{$gt:10}
+      })
+               .select("subject coursenum name enrolled term")
+               .sort({enrolled:-1})
       res.json(data);       
 
     }catch(e){
