@@ -5,3 +5,18 @@
     Enter course term: <input type = "text" name = "term">
     <input type = "submit">
 </form>
+
+<% if (courses.length==0){ %>
+No courses to display
+<% } else {%> 
+    <h1>Courses</h1>
+
+<% for (course of courses) {%>
+<hr>
+<%= course.subject %> <%= course.coursenum %> <%= course.name %>
+<% }} %>
+
+
+<pre>
+    <%= JSON.stringify(courses,null,5) %>
+</pre>
