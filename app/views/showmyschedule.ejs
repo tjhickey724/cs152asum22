@@ -1,0 +1,13 @@
+<ol>
+    <% for(course of courses) {%>
+        <li><%= course.courseId.subject %> 
+            <%= course.courseId.coursenum %> 
+            <%= course.courseId.name %> 
+        </li>
+    <% } %>
+</ol>
+<!--
+<pre>
+    <%= JSON.stringify(courses, null, 5) %> 
+</pre>
+-->

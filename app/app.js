@@ -253,6 +253,23 @@ app.get('/addCourse/:courseId',
 
 )
 
+app.get('/showSchedule',
+  isLoggedIn,
+  async (req,res,next) => {
+    try{
+      const courses = 
+         await Schedule.find({userId:res.locals.user.id})
+             .populate('courseId');
+      //res.json(courses);
+      res.locals.courses = courses;
+      res.render('showmyschedule')
+
+    }catch(e){
+      next(e);
+    }
+  }
+)
+
 app.get('/coursesBySubject',
   (req,res,next) => {
     res.locals.courses =[]
