@@ -15,8 +15,9 @@ No courses to display
 <% for (course of courses) {%>
 <hr>
 <%= course.subject %> <%= course.coursenum %>
-id = <%= course.courseId %> <%= course.name %>
-<% if (schedIds.includes(course._id)){%>
+id = "<%= course.courseId?.id %>" <%= course.name %>
+
+<% if (schedIds.includes(course.courseId?.id)){%>
   scheduled
 <% } else {%>
 <a href="/addCourse/<%= course._id%>">add to schedule</a>
