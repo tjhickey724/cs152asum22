@@ -35,10 +35,12 @@ router.use((req,res,next) => {
     res.locals.loggedIn = true
     res.locals.username = req.session.username
     res.locals.user = req.session.user
+    req.user = user
   } else {
     res.locals.loggedIn = false
     res.locals.username = null
     res.locals.user = null
+    req.user = null
   }
   next()
 })
