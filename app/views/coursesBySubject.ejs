@@ -5,7 +5,8 @@
     Enter course term: <input type = "text" name = "term">
     <input type = "submit">
 </form>
-
+<%= JSON.stringify(schedIds) %>
+<hr>
 <% if (courses.length==0){ %>
 No courses to display
 <% } else {%> 
@@ -13,9 +14,13 @@ No courses to display
 
 <% for (course of courses) {%>
 <hr>
-<%= course.subject %> <%= course.coursenum %> <%= course.name %>
+<%= course.subject %> <%= course.coursenum %>
+id = <%= course.courseId %> <%= course.name %>
+<% if (schedIds.includes(course._id)){%>
+  scheduled
+<% } else {%>
 <a href="/addCourse/<%= course._id%>">add to schedule</a>
-<% }} %>
+<% }}} %>
 
 
 <pre>
