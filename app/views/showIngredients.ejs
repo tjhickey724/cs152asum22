@@ -1,0 +1,18 @@
+
+<h1>Select a Main Ingredient</h1>
+
+<form method="post" action="/meals">
+    <input type="submit">
+    <hr>
+    <select name="ingredient">
+        <% for(ingr of ingredients){%> 
+            <option>
+                <%= ingr.strIngredient %>
+            </option>
+        <% } %>
+    </select>
+    <hr>
+
+</form>
+
+

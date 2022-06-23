@@ -190,6 +190,15 @@ app.post('/meals',
     res.render('showMeals')
   })
 
+app.get('/showIngredients',
+  async (req,res,next) => {
+    const url="https://www.themealdb.com/api/json/v1/1/list.php?i=list"
+    const response = await axios.get(url)
+    console.dir(response.data)
+    res.locals.ingredients = response.data.meals || []
+    res.render('showIngredients')
+  })
+
 app.get('/githubInfo/:githubId',
   async (req,res,next) => {
     const id = req.params.githubId;
