@@ -18,7 +18,7 @@ const courses = require('./public/data/courses20-21.json')
 //  Loading models
 // *********************************************************** //
 
-const Course = require('./models/Course')
+
 
 // *********************************************************** //
 //  Connecting to the database
@@ -26,7 +26,7 @@ const Course = require('./models/Course')
 
 const mongoose = require( 'mongoose' );
 //const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
-const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/timsCS153aSum22?retryWrites=true&w=majority'
+const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/tjhickey?retryWrites=true&w=majority'
 
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -44,6 +44,14 @@ const isLoggedIn = (req,res,next) => {
   }
   else res.redirect('/login')
 }
+/*
+  Load MongoDB models 
+*/
+const ToDoItem = require('./models/ToDoItem');
+const Schedule = require('./models/Schedule');
+const Course = require('./models/Course')
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -217,6 +225,184 @@ app.get('/uploadDB',
     const num = await Course.find({}).count();
     res.send("data uploaded: "+num)
   }
+)
+
+app.get('/bigCourses',
+  async (req,res,next) => {
+    try{
+      const bigCourses =  await Course.find({enrolled:{$gt:150}})
+                          //.select("subject coursenum name enrolled term")
+                          //.sort({term:1,enrolled:-1})
+                          //.limit(3)
+                          ;
+      res.json(bigCourses);
+    }catch(e){
+      next(e)
+    }
+  })
+
+
+
+app.get('/addCourse/:courseId',
+   isLoggedIn,
+   async (req,res,next) => {
+    try {
+      const schedItem = 
+         new Schedule(
+          {
+            userid:res.locals.user._id,
+            courseId:req.params.courseId}
+          )
+      await schedItem.save();
+      res.redirect('/coursesBySubject')
+    }catch(e) {
+      next(e)
+    }
+   }
+
+)
+
+app.get('/showSchedule',
+  isLoggedIn,
+  async (req,res,next) => {
+    try{
+      const courses = 
+         await Schedule.find({userId:res.locals.user.id})
+             .populate('courseId');
+      //res.json(courses);
+      res.locals.courses = courses;
+      res.render('showmyschedule')
+
+    }catch(e){
+      next(e);
+    }
+  }
+)
+
+app.get('/deleteFromSchedule/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        await Schedule.deleteOne({_id:itemId});
+        res.redirect('/showSchedule');
+      } catch(e){
+        next(e);
+      }
+    }
+)
+	
+
+app.get('/coursesBySubject',
+  isLoggedIn,
+  async (req,res,next) => {
+    res.locals.courses =[]
+    console.log('rendering couresBySubject')
+    const scheduledCourses = 
+    await Schedule.find({userId:res.locals.user.id});
+    res.locals.schedIds = 
+      scheduledCourses.map(x => {
+        let y = x.courseId.valueOf();
+        console.log(y); console.log(typeof y);
+        return y+"";
+      });
+    res.render('coursesBySubject')
+})
+  
+
+
+app.post('/coursesBySubject',
+  async (req,res,next) => {
+    try{
+      const subject = req.body.subject;
+      const term = req.body.term;
+      const data = await Course.find({
+        subject:subject,
+        term:term, 
+        enrolled:{$gt:10}
+      })
+               .sort({enrolled:-1})
+      //res.json(data); 
+      const scheduledCourses = 
+         await Schedule.find({userId:res.locals.user.id});
+      res.locals.schedIds = 
+         scheduledCourses.map(x => x.courseId);
+      res.locals.courses = data;
+      res.render('coursesBySubject');
+
+    }catch(e){
+      next(e)
+    }
+  }
+)
+
+
+
+app.get('/todo', (req,res,next) => res.render('todo'))
+
+app.post('/todo',
+  isLoggedIn,
+  async (req,res,next) => {
+    try {
+      const desc = req.body.desc;
+      const todoObj = {
+        userId:res.locals.user._id,
+        descr:desc,
+        completed:false,
+        createdAt: new Date(),
+      }
+      const todoItem = new ToDoItem(todoObj); // create ORM object for item
+      await todoItem.save();  // stores it in the database
+      res.redirect('/showTodoList');
+
+
+    }catch(err){
+      next(err);
+    }
+  }
+)
+
+app.get('/showTodoList',
+        isLoggedIn,
+  async (req,res,next) => {
+   try {
+    const todoitems = await ToDoItem.find({userId:res.locals.user._id});
+
+    res.locals.todoitems = todoitems
+    res.render('showTodoList')
+    //res.json(todoitems);
+   }catch(e){
+    next(e);
+   }
+  }
+)
+
+app.get('/deleteToDoItem/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        await ToDoItem.deleteOne({_id:itemId});
+        res.redirect('/showTodoList');
+      } catch(e){
+        next(e);
+      }
+    }
+)
+
+app.get('/toggleToDoItem/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        const item = await ToDoItem.findOne({_id:itemId});
+        item.completed = ! item.completed;
+        await item.save();
+        res.redirect('/showTodoList');
+      } catch(e){
+        next(e);
+      } 
+    }
 )
 
 // catch 404 and forward to error handler
