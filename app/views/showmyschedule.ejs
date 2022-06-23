@@ -3,6 +3,7 @@
         <li><%= course.courseId?.subject %> 
             <%= course.courseId?.coursenum %> 
             <%= course.courseId?.name %> 
+            <%= course.courseId?.term %> 
             <a href="/deleteFromSchedule/<%= course.id%>">delete</a>
         </li>
     <% } %>
