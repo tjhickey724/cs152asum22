@@ -25,6 +25,7 @@ const courses = require('./public/data/courses20-21.json')
 // *********************************************************** //
 
 const mongoose = require( 'mongoose' );
+//const mongodb_URI = process.env.mongodb_URI;
 //const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/tjhickey?retryWrites=true&w=majority'
 
@@ -55,6 +56,7 @@ const Course = require('./models/Course')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const cloudData = require('./routes/cloudData');
 
 var app = express();
 
@@ -92,8 +94,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(layouts)
-app.use(auth)
+app.use(layouts);
+app.use(auth);
+app.use(cloudData);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
