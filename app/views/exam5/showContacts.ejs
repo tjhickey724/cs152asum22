@@ -1,0 +1,29 @@
+<h1>Contacts</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>name</th><th>email</th><th>phone</th><th>comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (contact of contacts){%>
+            <tr>
+                <td><%= contact.name %> </td>
+                <td><%= contact.email %> </td>
+                <td><%= contact.phone %> </td>
+                <td><%= contact.comments %> </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+<hr>
+<h1>Add new contact</h1>
+<form method="post" action="/exam5">
+    <input type="text" name="name"> - name<br>
+    <input type="text" name="email"> - email<br>
+    <input type="text" name="phone"> - phone <br>
+    comments:<br>
+    <textarea name="comments"></textarea><br>
+    <input type="submit">
+
+</form>
