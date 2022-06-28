@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const layouts = require("express-ejs-layouts");
+const cors = require('cors');
 const axios = require('axios');
 const auth = require('./routes/auth');
 const session = require("express-session"); 
@@ -94,6 +95,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors());
 app.use(layouts);
 app.use(auth);
 app.use(cloudData);
