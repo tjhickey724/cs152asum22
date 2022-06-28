@@ -3,11 +3,11 @@ const mongoose = require( 'mongoose' );
 const Schema = mongoose.Schema;
 
 var contactSchema = Schema( {
+  userId: {type:Schema.Types.ObjectId, ref:'User'},
   name: String,
   email: String,
   phone: String,
   comments: String,
-  createdAt: Date,
 } );
 
 module.exports = mongoose.model( 'ContactItem', contactSchema );
