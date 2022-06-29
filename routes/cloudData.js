@@ -28,6 +28,17 @@ router.post('/cloud/get',
         res.json(cloudData);
 });
 
+/* get the list of all values associated with the particular email and key */
+router.post('/cloud/getKeyData',
+    async (req, res, next)  => {
+        console.log('in /cloud/getKeyData');
+        console.dir(req.body);
+        const {key} = req.body;
+        const cloudData = await CloudData.find({key})
+        res.json(cloudData);
+});
+
+
 /* remove all key/values pairs for the specified email */
 router.post('/cloud/clear',
     async (req, res, next)  => {
