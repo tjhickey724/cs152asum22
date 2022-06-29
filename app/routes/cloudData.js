@@ -15,7 +15,7 @@ router.post('/cloud/store',
         console.dir({email,key,value});
         const cloudData = new CloudData({email,key,value})
         await cloudData.save()
-        res.json({id:cloudData.id})
+        res.json(cloudData)
 });
 
 /* get the list of all values associated with the particular email and key */
