@@ -58,6 +58,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const cloudData = require('./routes/cloudData');
 const exam5 = require('./routes/exam5');
+const exam6 = require('./routes/exam6');
 
 var app = express();
 
@@ -99,6 +100,7 @@ app.use(layouts);
 app.use(auth);
 app.use(cloudData);
 app.use(exam5);
+app.use(exam6);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

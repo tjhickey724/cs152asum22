@@ -1,0 +1,16 @@
+<h1>Exam 6: Bug Reports</h1>
+
+<% for (bugReport of bugReports){%>
+<hr>
+<h6><%= bugReport.title %></h6>
+<%= bugReport.body %><br>
+<% } %>
+
+<hr>
+<h1>Add new bug report</h1>
+<form method="post" action="/exam6">
+    short bug description: <input type="text" name="title"><br>
+    detailed description:<br>
+    <textarea name="body"></textarea><br>
+    <input type="submit">
+</form>

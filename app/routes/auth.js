@@ -59,10 +59,13 @@ router.post('/login',
       if (isMatch) {
         req.session.username = username //req.body
         req.session.user = user
+        
         res.redirect('/')
       } else {
         req.session.username = null
         req.session.user = null
+        console.log('did not match')
+        console.dir({username,passphrase})
         res.redirect('/login')
       }
     }catch(e){
