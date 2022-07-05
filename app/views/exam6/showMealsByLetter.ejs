@@ -1,0 +1,23 @@
+<h1>Show Meals By Letter</h1>
+<% for (meal of meals){%>
+<div class="b-1 p-2 m-2 bg-info">
+    <h2><%= meal.strMeal %></h2>
+    <div class="row">
+        <div class="col">
+            category: <%= meal.strCategory %>
+            <br>
+            link: <a href="<%= meal.strSource %>"><%= meal.strSource %></a>
+            <img width="100%" src="<%= meal.strMealThumb %>" alt="picture of the dish">
+        
+        </div>
+        <div class="col">
+            <h2>Instructions</h2>
+            <%= meal.strInstructions %>
+
+        </div>
+    </div>
+    </div>
+<% } %>
+<pre>
+    <%= JSON.stringify(meals,null,5) %>
+</pre>

@@ -1,0 +1,11 @@
+<h1>Exam6-API</h1>
+<form method="post" action="/exam6API">
+    Select a letter:
+    <select name="letter">
+        <% for (x of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {%>
+          <option><%= x %></option>
+        <%}%>
+    </select>
+    <br>
+    <input type="submit">
+</form>
